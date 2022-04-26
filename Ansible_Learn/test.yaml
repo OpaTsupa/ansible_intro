@@ -1,0 +1,10 @@
+---
+- hosts: routers,localhost
+  tasks:
+    - name: Install Rsync
+      apt:
+        pkg: rsync      
+    - name: Synchronize
+      synchronize:
+        src: /opt/Ansible_Learn
+        dest: /opt/Ansible_Learn
