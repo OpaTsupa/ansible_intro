@@ -31,6 +31,24 @@
   roles:
     - dnsserver
     - ntp
+    - nfsserver
+
+- hosts: webservers
+  tasks:
+    - name:
+      apt:
+        pkg: nfs-common
+    - name: mount NFS
+      lineinfile:
+        path: /etc/fstab
+        line: 192.168.100.200:/opt/share /mnt nfs defaults 0 0
+        insertafter: EOF
+    - name: Check automount
+      ansible.posix.mount:
+        path: /mnt
+        state: remounted
+        opts: exec
+
 
 - hosts: 192.168.100.254
   vars_files:
